@@ -1,12 +1,15 @@
-import tkinter as tk
-
+from app import app, ecran, layout
+import sys
+from tabla_de_sah import TablaDeSah
+import piese
 sah_marime = 8
 
-ecran = tk.Tk()
-
+t = TablaDeSah()
 for i in range(sah_marime):
     for j in range(sah_marime):
-        buton = tk.Button(ecran, text='', width=5,height=5, highlightthickness=0, padx=0, pady=0)
-        buton.grid(row=i, column=j)
+        pion = piese.Pion(0)
+        layout.addWidget(pion.label, i, j)
 
-ecran.mainloop()
+
+ecran.show()
+sys.exit(app.exec_())
