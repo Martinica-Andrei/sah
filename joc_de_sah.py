@@ -1,6 +1,7 @@
 from tabla_de_sah import TablaDeSah
-import piese
 from app import layout
+from PyQt5.QtCore import Qt
+from app import ecran
 
 
 class JocDeSah:
@@ -11,6 +12,7 @@ class JocDeSah:
         self.miscari_posibile = []
         self.miscari_facute = []
         self.adaugare_eventuri(self.index_jucator_curent)
+        ecran.keyPressEvent = self.keyPressEvent
 
     def stergere_miscari_posibile(self):
         for miscare in self.miscari_posibile:
@@ -35,9 +37,16 @@ class JocDeSah:
             self.index_jucator_curent = 0
         self.adaugare_eventuri(self.index_jucator_curent)
 
-    def terminare_miscare(self):
+    def setare_jucator_anterior(self):
+        self.index_jucator_curent -= 1
+        if self.index_jucator_curent < 0:
+            self.index_jucator_curent = len(self.jucatori) - 1
+        self.adaugare_eventuri(self.index_jucator_curent)
+
+    def terminare_miscare(self, miscare):
         self.stergere_miscari_posibile()
         self.setare_urmatorul_jucator()
+        self.miscari_facute.append(miscare)
 
     def adaugare_eventuri(self, echipa):
         for i in range(self.tabla_de_sah.randuri):
@@ -47,9 +56,21 @@ class JocDeSah:
                 if piesa == None:
                     patratica.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()
                     continue
-                # nu trebuie setat mousePressEvent la patratica pentru ca e acoperit complet de 
+                # nu trebuie setat mousePressEvent la patratica pentru ca e acoperit complet de
                 # piesa
                 if piesa.echipa == echipa:
                     piesa.activeaza_click_event()
                 else:
                     piesa.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()
+
+    def anulare_ultima_miscare(self):
+        if len(self.miscari_facute):    
+            ultima_miscare = self.miscari_facute.pop()
+            ultima_miscare.anuleaza()
+            self.setare_jucator_anterior()
+            self.stergere_miscari_posibile()
+
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Z:
+            self.anulare_ultima_miscare()

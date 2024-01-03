@@ -35,6 +35,8 @@ class TablaDeSah:
         self.piese[rand][coloana] = piesa
         piesa.tabla_de_sah = self
         piesa.joc_de_sah = self.joc_de_sah
+        if piesa.rand_initial == None:
+            piesa.rand_initial = rand
 
     def scoatere_piesa(self, rand, coloana):
         self.piese[rand][coloana].label.setParent(None)
@@ -52,7 +54,11 @@ class TablaDeSah:
             self.adaugare_piesa(piese.Pion(piese.Piesa.negru, 1), 1, i)
             self.adaugare_piesa(piese.Pion(piese.Piesa.alb, -1),
                                 self.randuri - 2, i)
-        for i in [0, self.randuri - 1]:
+        for i in [0, self.coloane - 1]:
             self.adaugare_piesa(piese.Turn(piese.Piesa.negru, 1), 0, i)
             self.adaugare_piesa(piese.Turn(piese.Piesa.alb, -1),
+                                self.randuri - 1, i)
+        for i in [1, self.coloane - 2]:
+            self.adaugare_piesa(piese.Cal(piese.Piesa.negru, 1), 0, i)
+            self.adaugare_piesa(piese.Cal(piese.Piesa.alb, -1),
                                 self.randuri - 1, i)

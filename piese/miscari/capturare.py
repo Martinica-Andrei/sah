@@ -15,7 +15,9 @@ class Capturare(Actiune):
         if self.actiune_suplimentara:
             self.actiune_suplimentara()
         if self.terminare_miscare:
-            self.terminare_miscare()
+            self.terminare_miscare(self)
 
     def anuleaza(self):
-        pass
+        tabla = self.piesa.tabla_de_sah
+        tabla.muta_piesa(self.piesa, self.piesa_rand_curent, self.piese_coloana_curenta)
+        tabla.adaugare_piesa(self.piesa_tinta, self.piesa_rand_tinta, self.piesa_coloana_tinta)

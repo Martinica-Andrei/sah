@@ -15,7 +15,7 @@ class Mutare(Actiune):
         if self.actiune_suplimentara:
             self.actiune_suplimentara()
         if self.terminare_miscare:
-            self.terminare_miscare()
+            self.terminare_miscare(self)
 
     def anuleaza(self):
         self.piesa.tabla_de_sah.muta_piesa(

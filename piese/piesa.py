@@ -17,6 +17,7 @@ class Piesa(Patratica):
         self.tabla_de_sah = None  # trebuie setat
         self.joc_de_sah = None  # trebuie setat
         self.echipa = index_fisier  # index fisier coincide cu echipa
+        self.rand_initial = None # pentru pion, determina daca e prima miscare
 
     def pozitie(self):
         rand, coloana, _, _ = layout.getItemPosition(
