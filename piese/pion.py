@@ -12,7 +12,8 @@ class Pion(Piesa):
     def afisare_miscari_posibile(self):
         rand, coloana = self.pozitie()
         urmatoarele_randuri = [rand + self.directie_miscare]
-        if self.prima_miscare:
+        # adaugam si cea de-a doua miscare doar urmatoarea patratica nu are piesa
+        if self.prima_miscare and self.tabla_de_sah.piese[rand + self.directie_miscare][coloana] == None:
             urmatoarele_randuri.append(rand + self.directie_miscare * 2)
         while len(urmatoarele_randuri) and (urmatoarele_randuri[-1] < 0 or urmatoarele_randuri[-1] >= self.tabla_de_sah.randuri):
             urmatoarele_randuri.pop()
