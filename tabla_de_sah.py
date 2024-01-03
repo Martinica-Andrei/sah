@@ -1,5 +1,4 @@
 import piese
-import tkinter as tk
 from app import layout
 from patratica import Patratica
 
@@ -11,11 +10,42 @@ class TablaDeSah:
     spatiu_intre_piese = 20
 
     def __init__(self):
+        self.randuri = 8
+        self.coloane = 8
         self.patratele_background = []
-        for i in range(8):
+        self.piese = [[None for c in range(self.coloane)] for r in range(self.randuri)]
+        self.creere_background()
+        self.creere_piese()
+        self.adaugare_eventuri()
+
+    def creere_background(self):
+        for i in range(self.randuri):
             self.patratele_background.append([])
-            for j in range(8):
+            for j in range(self.coloane):
                 patratica = Patratica(piese.Piesa.lungime_piese + self.spatiu_intre_piese, piese.Piesa.inaltime_piese + self.spatiu_intre_piese,
                                       self.cale_fisiere_patratele[(i + j) % 2])
                 layout.addWidget(patratica.label, i, j)
                 self.patratele_background.append(patratica)
+
+    def adaugare_piesa(self, piesa, rand, coloana):
+        layout.addWidget(piesa.label, rand, coloana)
+        self.piese[rand][coloana] = piesa
+        piesa.tabla_de_sah = self
+
+    def muta_piesa(self, piesa, rand, coloana):
+        rand_curent, coloana_curenta = piesa.pozitie()
+        self.piese[rand_curent][coloana_curenta] = None
+        self.piese[rand][coloana] = piesa
+        layout.removeWidget(piesa.label)
+        layout.addWidget(piesa.label, rand, coloana)
+
+    def creere_piese(self):
+        for i in range(8):
+            self.adaugare_piesa(piese.Pion(1, 1), 1, i)
+            self.adaugare_piesa(piese.Pion(0, -1), self.randuri - 2, i)
+            
+    def adaugare_eventuri(self):
+        for rand in self.piese:
+            for piesa in rand:
+                if piesa != None:
+                    piesa.label.mousePressEvent = piesa.afisare_miscari_posibile
