@@ -17,7 +17,7 @@ class Piesa(Patratica):
         self.tabla_de_sah = None  # trebuie setat
         self.joc_de_sah = None  # trebuie setat
         self.echipa = index_fisier  # index fisier coincide cu echipa
-        self.rand_initial = None # pentru pion, determina daca e prima miscare
+        self.rand_initial = None  # pentru pion, determina daca e prima miscare
 
     def pozitie(self):
         rand, coloana, _, _ = layout.getItemPosition(
@@ -31,4 +31,24 @@ class Piesa(Patratica):
         self.label.mousePressEvent = lambda e: None
 
     def afisare_miscari_posibile(self):
+        pass
+
+    def coordonate_orizontala_verticala(self):
+        rand, coloana = self.pozitie()
+        coordonate = [[], [], [], []]
+        # dreapta
+        for c in range(coloana + 1, self.tabla_de_sah.coloane):
+            coordonate[0].append((rand, c))
+        # stanga
+        for c in range(coloana - 1, -1, -1):
+            coordonate[1].append((rand, c))
+        # sus
+        for r in range(rand - 1, -1, -1):
+            coordonate[2].append((r, coloana))
+        # jos
+        for r in range(rand + 1, self.tabla_de_sah.randuri):
+            coordonate[3].append((r, coloana))
+        return coordonate
+
+    def coordonate_diagonala(self):
         pass

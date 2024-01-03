@@ -18,34 +18,13 @@ class Turn(Piesa):
         return None
 
     def afisare_miscari_posibile(self):
-        rand, coloana = self.pozitie()
         miscari = []
-        # dreapta
-        for c in range(coloana + 1, self.tabla_de_sah.coloane):
-            miscare = self.ia_miscare(rand, c)
-            if miscare != None:
-                miscari.append(miscare)
-            if miscare == None or type(miscare) == Capturare:
-                break
-        # stanga
-        for c in range(coloana - 1, -1, -1):
-            miscare = self.ia_miscare(rand, c)
-            if miscare != None:
-                miscari.append(miscare)
-            if miscare == None or type(miscare) == Capturare:
-                break
-        # sus
-        for r in range(rand - 1, -1, -1):
-            miscare = self.ia_miscare(r, coloana)
-            if miscare != None:
-                miscari.append(miscare)
-            if miscare == None or type(miscare) == Capturare:
-                break
-        # jos
-        for r in range(rand + 1, self.tabla_de_sah.randuri):
-            miscare = self.ia_miscare(r, coloana)
-            if miscare != None:
-                miscari.append(miscare)
-            if miscare == None or type(miscare) == Capturare:
-                break
+        coordonate = self.coordonate_orizontala_verticala()
+        for directie in coordonate:
+            for r, c in directie:
+                miscare = self.ia_miscare(r, c)
+                if miscare != None:
+                    miscari.append(miscare)
+                if miscare == None or type(miscare) == Capturare:
+                    break
         self.joc_de_sah.actualizare_miscari_posibile(miscari)
