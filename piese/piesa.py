@@ -29,8 +29,5 @@ class Piesa(Patratica):
     def dezactiveaza_click_event(self):
         self.label.mousePressEvent = lambda e: None
 
-    def miscari_posibile(self):
-        pass
-
     def afisare_miscari_posibile(self):
         pass

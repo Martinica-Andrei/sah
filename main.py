@@ -1,4 +1,4 @@
-from app import app, ecran, layout
+from app import app, ecran
 import sys
 from joc_de_sah import JocDeSah
 

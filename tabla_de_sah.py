@@ -50,5 +50,9 @@ class TablaDeSah:
     def creere_piese(self):
         for i in range(8):
             self.adaugare_piesa(piese.Pion(piese.Piesa.negru, 1), 1, i)
-            self.adaugare_piesa(piese.Pion(
-                piese.Piesa.alb, -1), self.randuri - 2, i)
+            self.adaugare_piesa(piese.Pion(piese.Piesa.alb, -1),
+                                self.randuri - 2, i)
+        for i in [0, self.randuri - 1]:
+            self.adaugare_piesa(piese.Turn(piese.Piesa.negru, 1), 0, i)
+            self.adaugare_piesa(piese.Turn(piese.Piesa.alb, -1),
+                                self.randuri - 1, i)
