@@ -11,5 +11,6 @@ ecran = QWidget()
 layout = QGridLayout()
 layout.setAlignment(Qt.AlignCenter)
 layout.setSpacing(0)
+layout.setContentsMargins(0,0,0,0)
 
 ecran.setLayout(layout)

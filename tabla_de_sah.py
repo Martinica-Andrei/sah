@@ -8,6 +8,8 @@ class TablaDeSah:
     cale_fisiere_patratele = [
         "imagini/white_tile.png", "imagini/black_tile.png"]
     spatiu_intre_piese = 20
+    lungime_patratele = piese.Piesa.lungime_piese + spatiu_intre_piese
+    inaltime_patratele = piese.Piesa.inaltime_piese + spatiu_intre_piese
 
     def __init__(self, joc_de_sah):
         self.joc_de_sah = joc_de_sah
@@ -24,8 +26,8 @@ class TablaDeSah:
         for i in range(self.randuri):
             self.patratele_background.append([])
             for j in range(self.coloane):
-                patratica = Patratica(piese.Piesa.lungime_piese + self.spatiu_intre_piese, piese.Piesa.inaltime_piese + self.spatiu_intre_piese,
-                                      self.cale_fisiere_patratele[(i + j) % 2])
+                patratica = Patratica(
+                    self.lungime_patratele, self.inaltime_patratele, self.cale_fisiere_patratele[(i + j) % 2])
                 layout.addWidget(patratica.label, i, j)
                 self.patratele_background.append(patratica)
 
@@ -33,7 +35,7 @@ class TablaDeSah:
         layout.addWidget(piesa.label, rand, coloana)
         self.piese[rand][coloana] = piesa
         piesa.tabla_de_sah = self
-        piesa.joc_de_sah = self
+        piesa.joc_de_sah = self.joc_de_sah
 
     def muta_piesa(self, piesa, rand, coloana):
         rand_curent, coloana_curenta = piesa.pozitie()
