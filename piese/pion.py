@@ -20,7 +20,7 @@ class Pion(Piesa):
             if coloana >= 0 and coloana < self.tabla_de_sah.coloane:
                 # trebuie modificat mai tarziu pentru rege
                 piesa_tinta = self.tabla_de_sah.piese[rand_urmator][coloana] 
-                if piesa_tinta != None:
+                if piesa_tinta != None and piesa_tinta.echipa != self.echipa:
                     miscari.append(Capturare(self, piesa_tinta))
                     miscari[-1].actiune_suplimentara = lambda : self.setPrimaMiscare(False)
         return miscari
