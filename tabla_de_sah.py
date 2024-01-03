@@ -36,6 +36,10 @@ class TablaDeSah:
         piesa.tabla_de_sah = self
         piesa.joc_de_sah = self.joc_de_sah
 
+    def scoatere_piesa(self, rand, coloana):
+        self.piese[rand][coloana].label.setParent(None)
+        self.piese[rand][coloana] = None
+
     def muta_piesa(self, piesa, rand, coloana):
         rand_curent, coloana_curenta = piesa.pozitie()
         self.piese[rand_curent][coloana_curenta] = None

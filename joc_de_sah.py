@@ -9,6 +9,7 @@ class JocDeSah:
         self.jucatori = ["alb", "negru"]
         self.index_jucator_curent = 0
         self.miscari_posibile = []
+        self.miscari_facute = []
         self.adaugare_eventuri(self.index_jucator_curent)
 
     def stergere_miscari_posibile(self):
