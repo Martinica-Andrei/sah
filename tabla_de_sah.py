@@ -20,7 +20,6 @@ class TablaDeSah:
                       for r in range(self.randuri)]
         self.creere_background()
         self.creere_piese()
-        self.adaugare_eventuri(piese.Piesa.alb)
 
     def creere_background(self):
         for i in range(self.randuri):
@@ -41,7 +40,7 @@ class TablaDeSah:
         rand_curent, coloana_curenta = piesa.pozitie()
         self.piese[rand_curent][coloana_curenta] = None
         self.piese[rand][coloana] = piesa
-        layout.removeWidget(piesa.label)
+        piesa.label.setParent(None)
         layout.addWidget(piesa.label, rand, coloana)
 
     def creere_piese(self):
@@ -53,5 +52,9 @@ class TablaDeSah:
     def adaugare_eventuri(self, echipa):
         for rand in self.piese:
             for piesa in rand:
-                if piesa != None and piesa.echipa == echipa:
-                    piesa.label.mousePressEvent = piesa.afisare_miscari_posibile
+                if piesa == None:
+                    continue
+                if piesa.echipa == echipa:
+                    piesa.activeaza_click_event()
+                else:
+                    piesa.dezactiveaza_click_event()

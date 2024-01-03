@@ -20,5 +20,11 @@ class Piesa(Patratica):
         rand, coloana, _, _ = layout.getItemPosition(layout.indexOf(self.label))
         return (rand, coloana)
     
-    def afisare_miscari_posibile(self, event):
+    def activeaza_click_event(self):
+        self.label.mousePressEvent = lambda e : self.afisare_miscari_posibile()
+
+    def dezactiveaza_click_event(self):
+        self.label.mousePressEvent = lambda e : None
+
+    def afisare_miscari_posibile(self):
         pass

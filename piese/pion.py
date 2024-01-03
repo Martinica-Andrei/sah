@@ -9,7 +9,7 @@ class Pion(Piesa):
         self.directie_miscare = directie_miscare
         self.prima_miscare = True
 
-    def afisare_miscari_posibile(self, event):
+    def afisare_miscari_posibile(self):
         rand, coloana = self.pozitie()
         urmatoarele_randuri = [rand + self.directie_miscare]
         if self.prima_miscare:
