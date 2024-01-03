@@ -48,13 +48,3 @@ class TablaDeSah:
             self.adaugare_piesa(piese.Pion(piese.Piesa.negru, 1), 1, i)
             self.adaugare_piesa(piese.Pion(
                 piese.Piesa.alb, -1), self.randuri - 2, i)
-
-    def adaugare_eventuri(self, echipa):
-        for rand in self.piese:
-            for piesa in rand:
-                if piesa == None:
-                    continue
-                if piesa.echipa == echipa:
-                    piesa.activeaza_click_event()
-                else:
-                    piesa.dezactiveaza_click_event()

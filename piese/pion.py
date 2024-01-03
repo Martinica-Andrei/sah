@@ -20,4 +20,8 @@ class Pion(Piesa):
         for u in urmatoarele_randuri:
             if self.tabla_de_sah.piese[u][coloana] == None:
                 miscari.append(Mutare(self, u, coloana))
+                miscari[-1].actiune_suplimentara = lambda : self.setPrimaMiscare(False)
         self.joc_de_sah.actualizare_miscari_posibile(miscari)
+
+    def setPrimaMiscare(self, valoare):
+        self.prima_miscare = valoare
