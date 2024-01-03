@@ -6,6 +6,8 @@ from app import layout
 class Piesa:
     lungime_piese = 40
     inaltime_piese = 40
+    alb = 0
+    negru = 1
 
     def __init__(self, cale_fisiere, index_fisier):
         self.pixmap = QPixmap(cale_fisiere[index_fisier]).scaled(
@@ -14,6 +16,8 @@ class Piesa:
         self.label.setPixmap(self.pixmap)
         self.label.setAlignment(Qt.AlignCenter)
         self.tabla_de_sah = None # trebuie setat
+        self.joc_de_sah = None # trebuie setat
+        self.echipa = index_fisier # index fisier coincide cu echipa
 
     def pozitie(self):
         rand, coloana, _, _ = layout.getItemPosition(layout.indexOf(self.label))

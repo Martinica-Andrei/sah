@@ -10,5 +10,8 @@ class Pion(Piesa):
 
     def afisare_miscari_posibile(self, event):
         rand, coloana = self.pozitie()
-        self.tabla_de_sah.muta_piesa(self, rand + self.directie_miscare, coloana)
-        pass
+        urmatoarele_randuri = [rand + self.directie_miscare]
+        if self.prima_miscare:
+            urmatoarele_randuri.append(rand + self.directie_miscare * 2)
+        #self.tabla_de_sah.muta_piesa(self, rand + self.directie_miscare, coloana)
+        #pass

@@ -1,7 +1,6 @@
 from app import app, ecran, layout
 import sys
 from joc_de_sah import JocDeSah
-sah_marime = 8
 
 joc = JocDeSah()
 
