@@ -39,11 +39,16 @@ class JocDeSah:
         self.setare_urmatorul_jucator()
 
     def adaugare_eventuri(self, echipa):
-        for rand in self.tabla_de_sah.piese:
-            for piesa in rand:
+        for i in range(self.tabla_de_sah.randuri):
+            for j in range(self.tabla_de_sah.coloane):
+                piesa = self.tabla_de_sah.piese[i][j]
+                patratica = self.tabla_de_sah.patratele_background[i][j]
                 if piesa == None:
+                    patratica.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()
                     continue
+                # nu trebuie setat mousePressEvent la patratica pentru ca e acoperit complet de 
+                # piesa
                 if piesa.echipa == echipa:
                     piesa.activeaza_click_event()
                 else:
-                    piesa.dezactiveaza_click_event()
+                    piesa.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()

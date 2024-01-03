@@ -28,7 +28,7 @@ class TablaDeSah:
                 patratica = Patratica(
                     self.lungime_patratele, self.inaltime_patratele, self.cale_fisiere_patratele[(i + j) % 2])
                 layout.addWidget(patratica.label, i, j)
-                self.patratele_background.append(patratica)
+                self.patratele_background[i].append(patratica)
 
     def adaugare_piesa(self, piesa, rand, coloana):
         layout.addWidget(piesa.label, rand, coloana)

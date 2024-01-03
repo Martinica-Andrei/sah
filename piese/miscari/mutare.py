@@ -1,10 +1,10 @@
 from patratica import Patratica
-from app import layout
+from app import layout, ecran
 
 
 class Mutare(Patratica):
     def __init__(self, piesa, rand_tinta, coloana_tinta):
-        super().__init__(50, 50, "imagini/ok_move.png")
+        super().__init__(50, 50, "imagini/blue.png")
         self.piesa = piesa
         self.piesa_rand_curent, self.piese_coloana_curenta = self.piesa.pozitie()
         self.piesa_rand_tinta = rand_tinta

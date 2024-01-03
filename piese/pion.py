@@ -8,6 +8,9 @@ class Pion(Piesa):
                           "imagini/black_pawn.png"], index_fisier)
         self.directie_miscare = directie_miscare
         self.prima_miscare = True
+    
+    def piese_de_capturat(self):
+        pass
 
     def afisare_miscari_posibile(self):
         rand, coloana = self.pozitie()
