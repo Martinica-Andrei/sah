@@ -51,4 +51,42 @@ class Piesa(Patratica):
         return coordonate
 
     def coordonate_diagonala(self):
-        pass
+        rand, coloana = self.pozitie()
+        coordonate = [[], [], [], []]
+        #dreapta sus
+        i = 1
+        while True:
+            r = rand - i
+            c = coloana + i
+            if self.tabla_de_sah.is_coordonate_valide(r, c) == False:
+                break
+            coordonate[0].append((r,c))
+            i += 1
+        #stanga sus
+        i = 1
+        while True:
+            r = rand - i
+            c = coloana - i
+            if self.tabla_de_sah.is_coordonate_valide(r, c) == False:
+                break
+            coordonate[1].append((r,c))
+            i += 1
+        #dreapta jos
+        i = 1
+        while True:
+            r = rand + i
+            c = coloana + i
+            if self.tabla_de_sah.is_coordonate_valide(r, c) == False:
+                break
+            coordonate[2].append((r,c))
+            i += 1
+        #stanga jos
+        i = 1
+        while True:
+            r = rand + i
+            c = coloana - i
+            if self.tabla_de_sah.is_coordonate_valide(r, c) == False:
+                break
+            coordonate[3].append((r,c))
+            i += 1
+        return coordonate

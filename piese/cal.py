@@ -23,7 +23,7 @@ class Cal(Piesa):
         for r, c in self.directii:
             r += rand
             c += coloana
-            if r < 0 or r >= self.tabla_de_sah.randuri or c < 0 or c >= self.tabla_de_sah.coloane:
+            if self.tabla_de_sah.is_coordonate_valide(r, c) == False:
                 continue
             piesa = self.tabla_de_sah.piese[r][c]
             if piesa == None:
