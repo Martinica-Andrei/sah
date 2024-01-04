@@ -16,7 +16,6 @@ class JocDeSah:
 
     def stergere_miscari_posibile(self):
         for miscare in self.miscari_posibile:
-            # layout.removeWidget(miscare.label) # nu prea sterge uneori prin urmare folosim setParent(None)
             miscare.label.setParent(None)
         self.miscari_posibile = []
 
@@ -74,3 +73,9 @@ class JocDeSah:
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
             self.anulare_ultima_miscare()
+
+    def este_mat(self):
+        pass
+
+    def este_sah_mat(self):
+        pass
