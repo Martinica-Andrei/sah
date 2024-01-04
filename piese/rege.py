@@ -28,6 +28,6 @@ class Rege(Piesa):
         miscari = []
         for r, c in self.coordonate():
             miscare = self.ia_miscare(r, c)
-            if miscare != None:
+            if miscare is not None:
                 miscari.append(miscare)
         self.joc_de_sah.actualizare_miscari_posibile(miscari)

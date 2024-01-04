@@ -19,7 +19,7 @@ class Pion(Piesa):
             if self.tabla_de_sah.is_coordonate_valide(rand_urmator, c):
                 # trebuie modificat mai tarziu pentru rege
                 piesa_tinta = self.tabla_de_sah.piese[rand_urmator][c]
-                if piesa_tinta != None and piesa_tinta.echipa != self.echipa:
+                if piesa_tinta is not None and piesa_tinta.echipa != self.echipa:
                     miscari.append(Capturare(self, piesa_tinta))
         return miscari
 
@@ -30,7 +30,7 @@ class Pion(Piesa):
         oprire = rand + ((nr_randuri + 1) * self.directie_miscare)
         miscari = []
         for r in range(rand + self.directie_miscare, oprire, self.directie_miscare):
-            if self.tabla_de_sah.is_coordonate_valide(r, coloana) and self.tabla_de_sah.piese[r][coloana] == None:
+            if self.tabla_de_sah.is_coordonate_valide(r, coloana) and self.tabla_de_sah.piese[r][coloana] is None:
                 miscari.append(Mutare(self, r, coloana))
             else:
                 break

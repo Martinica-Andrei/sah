@@ -16,8 +16,8 @@ class Piesa(Patratica):
     def __init__(self, cale_fisiere, index_fisier):
         super().__init__(self.lungime_piese,
                          self.inaltime_piese, cale_fisiere[index_fisier])
-        self.tabla_de_sah = None  # trebuie setat
-        self.joc_de_sah = None  # trebuie setat
+        self.tabla_de_sah = None  
+        self.joc_de_sah = None  
         self.echipa = index_fisier  # index fisier coincide cu echipa
         self.rand_initial = None
         self.coloana_initiala = None
@@ -69,7 +69,7 @@ class Piesa(Patratica):
 
     def ia_miscare(self, rand, coloana):
         piesa = self.tabla_de_sah.piese[rand][coloana]
-        if piesa == None:
+        if piesa is None:
             return Mutare(self, rand, coloana)
         elif piesa.echipa != self.echipa:
             return Capturare(self, piesa)

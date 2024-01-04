@@ -26,23 +26,8 @@ class Cal(Piesa):
             if self.tabla_de_sah.is_coordonate_valide(r, c) == False:
                 continue
             piesa = self.tabla_de_sah.piese[r][c]
-            if piesa == None:
+            if piesa is None:
                 miscari.append(Mutare(self, r, c))
             elif piesa.echipa != self.echipa:
                 miscari.append(Capturare(self, piesa))
         self.joc_de_sah.actualizare_miscari_posibile(miscari)
-
-        # urmatoarele_randuri = [rand + self.directie_miscare]
-        # # adaugam si cea de-a doua miscare doar urmatoarea patratica nu are piesa
-        # if self.prima_miscare and self.tabla_de_sah.piese[rand + self.directie_miscare][coloana] == None:
-        #     urmatoarele_randuri.append(rand + self.directie_miscare * 2)
-        # while len(urmatoarele_randuri) and (urmatoarele_randuri[-1] < 0 or urmatoarele_randuri[-1] >= self.tabla_de_sah.randuri):
-        #     urmatoarele_randuri.pop()
-        # miscari = []
-        # for u in urmatoarele_randuri:
-        #     if self.tabla_de_sah.piese[u][coloana] == None:
-        #         miscari.append(Mutare(self, u, coloana))
-        #         miscari[-1].actiune_suplimentara = lambda: self.setPrimaMiscare(
-        #             False)
-        # miscari += self.piese_de_capturat()
-        # self.joc_de_sah.actualizare_miscari_posibile(miscari)

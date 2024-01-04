@@ -15,8 +15,8 @@ class Regina(Piesa):
         for directie in coordonate:
             for r, c in directie:
                 miscare = self.ia_miscare(r, c)
-                if miscare != None:
+                if miscare is not None:
                     miscari.append(miscare)
-                if miscare == None or type(miscare) == Capturare:
+                if miscare is None or type(miscare) == Capturare:
                     break
         self.joc_de_sah.actualizare_miscari_posibile(miscari)

@@ -52,7 +52,7 @@ class JocDeSah:
             for j in range(self.tabla_de_sah.coloane):
                 piesa = self.tabla_de_sah.piese[i][j]
                 patratica = self.tabla_de_sah.patratele_background[i][j]
-                if piesa == None:
+                if piesa is None:
                     patratica.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()
                     continue
                 # nu trebuie setat mousePressEvent la patratica pentru ca e acoperit complet de
