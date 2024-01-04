@@ -16,8 +16,8 @@ class Piesa(Patratica):
     def __init__(self, cale_fisiere, index_fisier):
         super().__init__(self.lungime_piese,
                          self.inaltime_piese, cale_fisiere[index_fisier])
-        self.tabla_de_sah = None  
-        self.joc_de_sah = None  
+        self.tabla_de_sah = None
+        self.joc_de_sah = None
         self.echipa = index_fisier  # index fisier coincide cu echipa
         self.rand_initial = None
         self.coloana_initiala = None
@@ -27,16 +27,7 @@ class Piesa(Patratica):
             layout.indexOf(self.label))
         return (rand, coloana)
 
-    def activeaza_click_event(self):
-        self.label.mousePressEvent = lambda e: self.afisare_miscari_posibile()
-
-    def dezactiveaza_click_event(self):
-        self.label.mousePressEvent = lambda e: None
-
     def miscari_posibile(self):
-        pass
-
-    def afisare_miscari_posibile(self):
         pass
 
     def coordonate_orizontala_verticala(self):

@@ -17,7 +17,7 @@ class Cal(Piesa):
         super().__init__(["imagini/white_knight.png",
                           "imagini/black_knight.png"], index_fisier)
 
-    def afisare_miscari_posibile(self):
+    def miscari_posibile(self):
         rand, coloana = self.pozitie()
         miscari = []
         for r, c in self.directii:
@@ -30,4 +30,5 @@ class Cal(Piesa):
                 miscari.append(Mutare(self, r, c))
             elif piesa.echipa != self.echipa:
                 miscari.append(Capturare(self, piesa))
-        self.joc_de_sah.actualizare_miscari_posibile(miscari)
+        return miscari
+        

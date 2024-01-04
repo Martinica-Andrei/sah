@@ -9,7 +9,7 @@ class Regina(Piesa):
         super().__init__(["imagini/white_queen.png",
                           "imagini/black_queen.png"], index_fisier)
 
-    def afisare_miscari_posibile(self):
+    def miscari_posibile(self):
         miscari = []
         coordonate = self.coordonate_diagonala() + self.coordonate_orizontala_verticala()
         for directie in coordonate:
@@ -19,4 +19,4 @@ class Regina(Piesa):
                     miscari.append(miscare)
                 if miscare is None or type(miscare) == Capturare:
                     break
-        self.joc_de_sah.actualizare_miscari_posibile(miscari)
+        return miscari

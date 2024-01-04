@@ -3,6 +3,7 @@ from app import layout
 from PyQt5.QtCore import Qt
 from app import ecran
 
+
 class JocDeSah:
     def __init__(self):
         self.tabla_de_sah = TablaDeSah(self)
@@ -21,7 +22,8 @@ class JocDeSah:
     def adaugare_miscari_posibile(self, miscari_posibile):
         for miscare in miscari_posibile:
             miscare.init_grafica()
-            miscare.grafica.label.mousePressEvent = lambda e, miscare=miscare : miscare.executa()
+            miscare.grafica.label.mousePressEvent = lambda e, miscare=miscare: self.miscare_click_event(
+                e, miscare)
             layout.addWidget(
                 miscare.grafica.label, miscare.piesa_rand_tinta, miscare.piesa_coloana_tinta)
             miscare.terminare_miscare = self.terminare_miscare
@@ -54,22 +56,42 @@ class JocDeSah:
                 piesa = self.tabla_de_sah.piese[i][j]
                 patratica = self.tabla_de_sah.patratele_background[i][j]
                 if piesa is None:
-                    patratica.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()
+                    patratica.label.mousePressEvent = self.patratica_click_event
                     continue
                 # nu trebuie setat mousePressEvent la patratica pentru ca e acoperit complet de
                 # piesa
                 if piesa.echipa == echipa:
-                    piesa.activeaza_click_event()
+                    piesa.label.mousePressEvent = lambda e, piesa=piesa: self.piesa_click_event(
+                        e, piesa)
                 else:
-                    piesa.label.mousePressEvent = lambda e: self.stergere_miscari_posibile()
+                    piesa.label.mousePressEvent = self.patratica_click_event
+
+    def patratica_click_event(self, e):
+        mouse_butoane = e.buttons()
+        if mouse_butoane & (Qt.LeftButton | Qt.RightButton):
+            self.stergere_miscari_posibile()
+
+    def piesa_click_event(self, e, piesa):
+        mouse_butoane = e.buttons()
+        if mouse_butoane & Qt.LeftButton:
+            piesa_miscari = piesa.miscari_posibile()
+            self.actualizare_miscari_posibile(piesa_miscari)
+        elif mouse_butoane & Qt.RightButton:
+            self.stergere_miscari_posibile()
+
+    def miscare_click_event(self, e, miscare):
+        mouse_butoane = e.buttons()
+        if mouse_butoane & Qt.LeftButton:
+            miscare.executa()
+        elif mouse_butoane & Qt.RightButton:
+            self.stergere_miscari_posibile()
 
     def anulare_ultima_miscare(self):
-        if len(self.miscari_facute):    
+        if len(self.miscari_facute):
             ultima_miscare = self.miscari_facute.pop()
             ultima_miscare.anuleaza()
             self.setare_jucator_anterior()
             self.stergere_miscari_posibile()
-
 
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:

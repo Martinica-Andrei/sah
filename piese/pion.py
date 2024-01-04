@@ -11,19 +11,19 @@ class Pion(Piesa):
         #directie_miscare e 1 pentru jos si -1 pentru sus
         self.directie_miscare = directie_miscare
 
-    def piese_de_capturat(self):
+    def miscari_de_capturat(self):
         rand, coloana = self.pozitie()
         rand_urmator = rand + self.directie_miscare
         miscari = []
         for c in [coloana - 1, coloana + 1]:
             if self.tabla_de_sah.is_coordonate_valide(rand_urmator, c):
-                # trebuie modificat mai tarziu pentru rege
+                # trebuie modif`icat mai tarziu pentru rege
                 piesa_tinta = self.tabla_de_sah.piese[rand_urmator][c]
                 if piesa_tinta is not None and piesa_tinta.echipa != self.echipa:
                     miscari.append(Capturare(self, piesa_tinta))
         return miscari
 
-    def afisare_miscari_posibile(self):
+    def miscari_posibile(self):
         rand, coloana = self.pozitie()
         este_prima_miscare = (self.rand_initial == rand)
         nr_randuri = 1 + este_prima_miscare
@@ -34,6 +34,6 @@ class Pion(Piesa):
                 miscari.append(Mutare(self, r, coloana))
             else:
                 break
-        miscari += self.piese_de_capturat()
-        self.joc_de_sah.actualizare_miscari_posibile(miscari)
+        miscari += self.miscari_de_capturat()
+        return miscari
             

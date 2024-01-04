@@ -9,7 +9,7 @@ class Turn(Piesa):
         super().__init__(["imagini/white_rook.png",
                           "imagini/black_rook.png"], index_fisier)
 
-    def afisare_miscari_posibile(self):
+    def miscari_posibile(self):
         miscari = []
         coordonate = self.coordonate_orizontala_verticala()
         for directie in coordonate:
@@ -19,4 +19,4 @@ class Turn(Piesa):
                     miscari.append(miscare)
                 if miscare is None or type(miscare) == Capturare:
                     break
-        self.joc_de_sah.actualizare_miscari_posibile(miscari)
+        return miscari
