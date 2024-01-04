@@ -121,7 +121,7 @@ class JocDeSah:
     def este_check(self):
         for miscari in self.miscari_jucator(not self.index_jucator_curent):
             for miscare in miscari:
-                if type(miscare) == Capturare and type(miscare.piesa_tinta) == Rege and miscare.piesa_tinta.echipa != miscare.piesa.echipa:
+                if type(miscare) == Capturare and type(miscare.piesa_tinta) == Rege:
                     return True
         return False
 
