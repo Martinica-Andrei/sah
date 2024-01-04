@@ -4,3 +4,4 @@ from .turn import Turn
 from .cal import Cal
 from .nebun import Nebun
 from .regina import Regina
+from .rege import Rege

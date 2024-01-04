@@ -37,6 +37,8 @@ class TablaDeSah:
         piesa.joc_de_sah = self.joc_de_sah
         if piesa.rand_initial == None:
             piesa.rand_initial = rand
+        if piesa.coloana_initiala == None:
+            piesa.coloana_initiala = coloana
 
     def scoatere_piesa(self, rand, coloana):
         self.piese[rand][coloana].label.setParent(None)
@@ -71,6 +73,11 @@ class TablaDeSah:
         self.adaugare_piesa(piese.Regina(piese.Piesa.negru), 0, 3)
         self.adaugare_piesa(piese.Regina(piese.Piesa.alb),
                                 self.randuri - 1, 3)
+        
+        self.adaugare_piesa(piese.Rege(piese.Piesa.negru), 0, 4)
+        self.adaugare_piesa(piese.Rege(piese.Piesa.alb),
+                                self.randuri - 1, 4)
 
     def is_coordonate_valide(self, r, c):
         return (r >= 0 and r < self.randuri and c >= 0 and c < self.coloane)
+    

@@ -12,7 +12,7 @@ class JocDeSah:
         self.miscari_posibile = []
         self.miscari_facute = []
         self.adaugare_eventuri(self.index_jucator_curent)
-        ecran.keyPressEvent = self.keyPressEvent
+        ecran.keyPressEvent = self.key_press_event
 
     def stergere_miscari_posibile(self):
         for miscare in self.miscari_posibile:
@@ -71,6 +71,6 @@ class JocDeSah:
             self.stergere_miscari_posibile()
 
 
-    def keyPressEvent(self, event):
+    def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
             self.anulare_ultima_miscare()
