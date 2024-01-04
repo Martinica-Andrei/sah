@@ -85,6 +85,6 @@ class TablaDeSah:
         piese = []
         for rand in self.piese:
             for piesa in rand:
-                if piesa is not None and piese.echipa == echipa:
+                if piesa is not None and piesa.echipa == echipa:
                     piese.append(piesa)
         return piese

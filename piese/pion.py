@@ -17,7 +17,6 @@ class Pion(Piesa):
         miscari = []
         for c in [coloana - 1, coloana + 1]:
             if self.tabla_de_sah.is_coordonate_valide(rand_urmator, c):
-                # trebuie modif`icat mai tarziu pentru rege
                 piesa_tinta = self.tabla_de_sah.piese[rand_urmator][c]
                 if piesa_tinta is not None and piesa_tinta.echipa != self.echipa:
                     miscari.append(Capturare(self, piesa_tinta))

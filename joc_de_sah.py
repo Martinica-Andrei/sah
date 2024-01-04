@@ -2,6 +2,8 @@ from tabla_de_sah import TablaDeSah
 from app import layout
 from PyQt5.QtCore import Qt
 from app import ecran
+from piese.miscari.capturare import Capturare
+from piese.rege import Rege
 
 
 class JocDeSah:
@@ -11,8 +13,8 @@ class JocDeSah:
         self.index_jucator_curent = 0
         self.miscari_posibile = []
         self.miscari_facute = []
-        self.adaugare_eventuri(self.index_jucator_curent)
         ecran.keyPressEvent = self.key_press_event
+        self.adaugare_eventuri(self.index_jucator_curent)
 
     def stergere_miscari_posibile(self):
         for miscare in self.miscari_posibile:
@@ -49,6 +51,7 @@ class JocDeSah:
         self.stergere_miscari_posibile()
         self.setare_urmatorul_jucator()
         self.miscari_facute.append(miscare)
+        self.verificare_joc_sfarsit()
 
     def adaugare_eventuri(self, echipa):
         for i in range(self.tabla_de_sah.randuri):
@@ -74,8 +77,9 @@ class JocDeSah:
     def piesa_click_event(self, e, piesa):
         mouse_butoane = e.buttons()
         if mouse_butoane & Qt.LeftButton:
-            piesa_miscari = piesa.miscari_posibile()
-            self.actualizare_miscari_posibile(piesa_miscari)
+            miscari_piesa = piesa.miscari_posibile()
+            miscari_piesa = self.piesa_miscari_legale(miscari_piesa)
+            self.actualizare_miscari_posibile(miscari_piesa)
         elif mouse_butoane & Qt.RightButton:
             self.stergere_miscari_posibile()
 
@@ -86,19 +90,54 @@ class JocDeSah:
         elif mouse_butoane & Qt.RightButton:
             self.stergere_miscari_posibile()
 
+    # adauga doar miscari care nu il pun pe regele jucatorului curent in check
+    def piesa_miscari_legale(self, miscari_piesa):
+        miscari_check = []
+        for miscare in miscari_piesa:
+            miscare.executa()
+            if self.este_check() == False:
+                miscari_check.append(miscare)
+            miscare.anuleaza()
+        return miscari_check
+
     def anulare_ultima_miscare(self):
         if len(self.miscari_facute):
             ultima_miscare = self.miscari_facute.pop()
             ultima_miscare.anuleaza()
             self.setare_jucator_anterior()
             self.stergere_miscari_posibile()
+            self.verificare_joc_sfarsit()
 
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
             self.anulare_ultima_miscare()
 
-    def este_mat(self):
-        piese = self.tabla_de_sah.piese_echipa(self.index_jucator_curent)
+    def miscari_jucator(self, index_jucator):
+        piese = self.tabla_de_sah.piese_echipa(index_jucator)
+        for piesa in piese:
+            yield piesa.miscari_posibile()
 
-    def este_sah_mat(self):
-        pass
+    # este_check pentru jucator curent
+    def este_check(self):
+        for miscari in self.miscari_jucator(not self.index_jucator_curent):
+            for miscare in miscari:
+                if type(miscare) == Capturare and type(miscare.piesa_tinta) == Rege and miscare.piesa_tinta.echipa != miscare.piesa.echipa:
+                    return True
+        return False
+
+    def este_checkmate(self):
+        for miscari in self.miscari_jucator(self.index_jucator_curent):
+            for miscare in miscari:
+                miscare.executa()
+                if self.este_check() == False:
+                    miscare.anuleaza()
+                    return False
+                miscare.anuleaza()
+        return True
+
+    def verificare_joc_sfarsit(self):
+        if self.este_check():
+            if self.este_checkmate():
+                print("checkmate")
+            else:
+                print('check')
