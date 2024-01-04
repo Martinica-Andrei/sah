@@ -9,14 +9,6 @@ class Turn(Piesa):
         super().__init__(["imagini/white_rook.png",
                           "imagini/black_rook.png"], index_fisier)
 
-    def ia_miscare(self, rand, coloana):
-        piesa = self.tabla_de_sah.piese[rand][coloana]
-        if piesa == None:
-            return Mutare(self, rand, coloana)
-        elif piesa.echipa != self.echipa:
-            return Capturare(self, piesa)
-        return None
-
     def afisare_miscari_posibile(self):
         miscari = []
         coordonate = self.coordonate_orizontala_verticala()

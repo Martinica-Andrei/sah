@@ -12,14 +12,6 @@ class Rege(Piesa):
         super().__init__(["imagini/white_king.png",
                           "imagini/black_king.png"], index_fisier)
 
-    def ia_miscare(self, rand, coloana):
-        piesa = self.tabla_de_sah.piese[rand][coloana]
-        if piesa == None:
-            return Mutare(self, rand, coloana)
-        elif piesa.echipa != self.echipa:
-            return Capturare(self, piesa)
-        return None
-
     def coordonate(self):
         rand, coloana = self.pozitie()
         coord = []
@@ -27,11 +19,10 @@ class Rege(Piesa):
             for c in range(-1, 2):
                 r_rezultat = r + rand
                 c_rezultat = c + coloana
-                if r == c == 0 or self.tabla_de_sah.is_coordonate_valide(r_rezultat,c_rezultat) == False:
+                if r == c == 0 or self.tabla_de_sah.is_coordonate_valide(r_rezultat, c_rezultat) == False:
                     continue
                 coord.append((r_rezultat, c_rezultat))
         return coord
-
 
     def afisare_miscari_posibile(self):
         miscari = []

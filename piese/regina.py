@@ -3,18 +3,11 @@ from app import layout
 from .miscari.mutare import Mutare
 from .miscari.capturare import Capturare
 
+
 class Regina(Piesa):
     def __init__(self, index_fisier):
         super().__init__(["imagini/white_queen.png",
                           "imagini/black_queen.png"], index_fisier)
-
-    def ia_miscare(self, rand, coloana):
-        piesa = self.tabla_de_sah.piese[rand][coloana]
-        if piesa == None:
-            return Mutare(self, rand, coloana)
-        elif piesa.echipa != self.echipa:
-            return Capturare(self, piesa)
-        return None
 
     def afisare_miscari_posibile(self):
         miscari = []

@@ -3,6 +3,8 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from patratica import Patratica
 from app import layout
+from .miscari.mutare import Mutare
+from .miscari.capturare import Capturare
 
 
 class Piesa(Patratica):
@@ -17,7 +19,7 @@ class Piesa(Patratica):
         self.tabla_de_sah = None  # trebuie setat
         self.joc_de_sah = None  # trebuie setat
         self.echipa = index_fisier  # index fisier coincide cu echipa
-        self.rand_initial = None  
+        self.rand_initial = None
         self.coloana_initiala = None
 
     def pozitie(self):
@@ -60,7 +62,15 @@ class Piesa(Patratica):
                 for k in [-1, 1]:
                     r = rand + (j * i)
                     c = coloana + (k * i)
-                    if self.tabla_de_sah.is_coordonate_valide(r, c):   
-                        coordonate[index_coordonate].append((r,c))
-                    index_coordonate += 1          
+                    if self.tabla_de_sah.is_coordonate_valide(r, c):
+                        coordonate[index_coordonate].append((r, c))
+                    index_coordonate += 1
         return coordonate
+
+    def ia_miscare(self, rand, coloana):
+        piesa = self.tabla_de_sah.piese[rand][coloana]
+        if piesa == None:
+            return Mutare(self, rand, coloana)
+        elif piesa.echipa != self.echipa:
+            return Capturare(self, piesa)
+        return None

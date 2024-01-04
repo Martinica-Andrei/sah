@@ -3,13 +3,14 @@ from app import layout
 from .miscari.mutare import Mutare
 from .miscari.capturare import Capturare
 
+
 class Pion(Piesa):
     def __init__(self, index_fisier, directie_miscare):
         super().__init__(["imagini/white_pawn.png",
                           "imagini/black_pawn.png"], index_fisier)
         self.directie_miscare = directie_miscare
         # rand_initial pentru a determina daca pionul se poate misca de doua ori sau nu
-    
+
     def piese_de_capturat(self):
         rand, coloana = self.pozitie()
         rand_urmator = rand + self.directie_miscare
@@ -19,7 +20,7 @@ class Pion(Piesa):
         for coloana in [coloana - 1, coloana + 1]:
             if coloana >= 0 and coloana < self.tabla_de_sah.coloane:
                 # trebuie modificat mai tarziu pentru rege
-                piesa_tinta = self.tabla_de_sah.piese[rand_urmator][coloana] 
+                piesa_tinta = self.tabla_de_sah.piese[rand_urmator][coloana]
                 if piesa_tinta != None and piesa_tinta.echipa != self.echipa:
                     miscari.append(Capturare(self, piesa_tinta))
         return miscari
