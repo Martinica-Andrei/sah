@@ -55,18 +55,22 @@ class TablaDeSah:
             self.adaugare_piesa(piese.Pion(piese.Piesa.alb, -1),
                                 self.randuri - 2, i)
         for i in [0, self.coloane - 1]:
-            self.adaugare_piesa(piese.Turn(piese.Piesa.negru, 1), 0, i)
-            self.adaugare_piesa(piese.Turn(piese.Piesa.alb, -1),
+            self.adaugare_piesa(piese.Turn(piese.Piesa.negru), 0, i)
+            self.adaugare_piesa(piese.Turn(piese.Piesa.alb),
                                 self.randuri - 1, i)
         for i in [1, self.coloane - 2]:
-            self.adaugare_piesa(piese.Cal(piese.Piesa.negru, 1), 0, i)
-            self.adaugare_piesa(piese.Cal(piese.Piesa.alb, -1),
+            self.adaugare_piesa(piese.Cal(piese.Piesa.negru), 0, i)
+            self.adaugare_piesa(piese.Cal(piese.Piesa.alb),
                                 self.randuri - 1, i)
             
         for i in [2, self.coloane - 3]:
-            self.adaugare_piesa(piese.Nebun(piese.Piesa.negru, 1), 0, i)
-            self.adaugare_piesa(piese.Nebun(piese.Piesa.alb, -1),
+            self.adaugare_piesa(piese.Nebun(piese.Piesa.negru), 0, i)
+            self.adaugare_piesa(piese.Nebun(piese.Piesa.alb),
                                 self.randuri - 1, i)
+            
+        self.adaugare_piesa(piese.Regina(piese.Piesa.negru), 0, 3)
+        self.adaugare_piesa(piese.Regina(piese.Piesa.alb),
+                                self.randuri - 1, 3)
 
     def is_coordonate_valide(self, r, c):
         return (r >= 0 and r < self.randuri and c >= 0 and c < self.coloane)

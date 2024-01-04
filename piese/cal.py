@@ -13,7 +13,7 @@ class Cal(Piesa):
         (-2, -1), (-1, -2)
     ]
 
-    def __init__(self, index_fisier, directie_miscare):
+    def __init__(self, index_fisier):
         super().__init__(["imagini/white_knight.png",
                           "imagini/black_knight.png"], index_fisier)
 
