@@ -3,7 +3,6 @@ from app import layout
 from PyQt5.QtCore import Qt
 from app import ecran
 
-
 class JocDeSah:
     def __init__(self):
         self.tabla_de_sah = TablaDeSah(self)
@@ -16,13 +15,15 @@ class JocDeSah:
 
     def stergere_miscari_posibile(self):
         for miscare in self.miscari_posibile:
-            miscare.label.setParent(None)
+            miscare.grafica.label.setParent(None)
         self.miscari_posibile = []
 
     def adaugare_miscari_posibile(self, miscari_posibile):
         for miscare in miscari_posibile:
+            miscare.init_grafica()
+            miscare.grafica.label.mousePressEvent = lambda e, miscare=miscare : miscare.executa()
             layout.addWidget(
-                miscare.label, miscare.piesa_rand_tinta, miscare.piesa_coloana_tinta)
+                miscare.grafica.label, miscare.piesa_rand_tinta, miscare.piesa_coloana_tinta)
             miscare.terminare_miscare = self.terminare_miscare
             self.miscari_posibile.append(miscare)
 
@@ -75,7 +76,7 @@ class JocDeSah:
             self.anulare_ultima_miscare()
 
     def este_mat(self):
-        pass
+        piese = self.tabla_de_sah.piese_echipa(self.index_jucator_curent)
 
     def este_sah_mat(self):
         pass

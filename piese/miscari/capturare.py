@@ -12,10 +12,7 @@ class Capturare(Actiune):
         self.piesa.tabla_de_sah.scoatere_piesa(self.piesa_rand_tinta, self.piesa_coloana_tinta)
         self.piesa.tabla_de_sah.muta_piesa(
         self.piesa, self.piesa_rand_tinta, self.piesa_coloana_tinta)
-        if self.actiune_suplimentara:
-            self.actiune_suplimentara()
-        if self.terminare_miscare:
-            self.terminare_miscare(self)
+        super().executa()
 
     def anuleaza(self):
         tabla = self.piesa.tabla_de_sah

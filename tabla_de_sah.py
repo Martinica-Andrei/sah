@@ -52,7 +52,7 @@ class TablaDeSah:
         layout.addWidget(piesa.label, rand, coloana)
 
     def creere_piese(self):
-        for i in range(8):
+        for i in range(self.coloane):
             self.adaugare_piesa(piese.Pion(piese.Piesa.negru, 1), 1, i)
             self.adaugare_piesa(piese.Pion(piese.Piesa.alb, -1),
                                 self.randuri - 2, i)
@@ -81,3 +81,10 @@ class TablaDeSah:
     def is_coordonate_valide(self, r, c):
         return (r >= 0 and r < self.randuri and c >= 0 and c < self.coloane)
     
+    def piese_echipa(self, echipa):
+        piese = []
+        for rand in self.piese:
+            for piesa in rand:
+                if piesa is not None and piese.echipa == echipa:
+                    piese.append(piesa)
+        return piese

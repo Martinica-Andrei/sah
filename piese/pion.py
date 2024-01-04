@@ -6,9 +6,9 @@ from .miscari.capturare import Capturare
 
 class Pion(Piesa):
     def __init__(self, index_fisier, directie_miscare):
-        #directie_miscare e 1 pentru jos si -1 pentru sus
         super().__init__(["imagini/white_pawn.png",
                           "imagini/black_pawn.png"], index_fisier)
+        #directie_miscare e 1 pentru jos si -1 pentru sus
         self.directie_miscare = directie_miscare
 
     def piese_de_capturat(self):
