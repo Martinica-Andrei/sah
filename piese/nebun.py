@@ -1,6 +1,4 @@
 from .piesa import Piesa
-from app import layout
-from .miscari.mutare import Mutare
 from .miscari.capturare import Capturare
 
 # nebunul are aproape acelasi cod ca turnul

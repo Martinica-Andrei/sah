@@ -1,5 +1,4 @@
 from patratica import Patratica
-from app import layout
 from .miscari.mutare import Mutare
 from .miscari.capturare import Capturare
 
@@ -20,8 +19,8 @@ class Piesa(Patratica):
         self.coloana_initiala = None
 
     def pozitie(self):
-        rand, coloana, _, _ = layout.getItemPosition(
-            layout.indexOf(self.label))
+        rand, coloana, _, _ = self.tabla_de_sah.layout.getItemPosition(
+            self.tabla_de_sah.layout.indexOf(self.label))
         return (rand, coloana)
 
     def miscari_posibile(self):

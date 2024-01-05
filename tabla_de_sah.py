@@ -1,7 +1,7 @@
 import piese
-from app import layout
 from patratica import Patratica
-
+from PyQt5.QtWidgets import QGridLayout
+from PyQt5.QtCore import Qt
 
 class TablaDeSah:
 
@@ -18,8 +18,15 @@ class TablaDeSah:
         self.patratele_background = []
         self.piese = [[None for c in range(self.coloane)]
                       for r in range(self.randuri)]
+        self.layout = QGridLayout()
+        self.layout_configurare()
         self.creere_background()
         self.creere_piese()
+
+    def layout_configurare(self):
+        self.layout.setAlignment(Qt.AlignCenter)
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(0,0,0,0)
 
     def creere_background(self):
         for i in range(self.randuri):
@@ -27,11 +34,11 @@ class TablaDeSah:
             for j in range(self.coloane):
                 patratica = Patratica(
                     self.lungime_patratele, self.inaltime_patratele, self.cale_fisiere_patratele[(i + j) % 2])
-                layout.addWidget(patratica.label, i, j)
+                self.layout.addWidget(patratica.label, i, j)
                 self.patratele_background[i].append(patratica)
 
     def adaugare_piesa(self, piesa, rand, coloana):
-        layout.addWidget(piesa.label, rand, coloana)
+        self.layout.addWidget(piesa.label, rand, coloana)
         self.piese[rand][coloana] = piesa
         piesa.tabla_de_sah = self
         piesa.joc_de_sah = self.joc_de_sah
@@ -49,7 +56,7 @@ class TablaDeSah:
         self.piese[rand_curent][coloana_curenta] = None
         self.piese[rand][coloana] = piesa
         piesa.label.setParent(None)
-        layout.addWidget(piesa.label, rand, coloana)
+        self.layout.addWidget(piesa.label, rand, coloana)
 
     def creere_piese(self):
         for i in range(self.coloane):

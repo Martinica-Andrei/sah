@@ -1,14 +1,15 @@
 from tabla_de_sah import TablaDeSah
-from app import layout
 from PyQt5.QtCore import Qt
 from app import ecran
 from piese.miscari.capturare import Capturare
 from piese.rege import Rege
+from app import ecran
 
 
 class JocDeSah:
     def __init__(self):
         self.tabla_de_sah = TablaDeSah(self)
+        ecran.setLayout(self.tabla_de_sah.layout)
         self.jucatori = ["alb", "negru"]
         self.index_jucator_curent = 0
         self.miscari_posibile = []
@@ -26,7 +27,7 @@ class JocDeSah:
             miscare.init_grafica()
             miscare.grafica.label.mousePressEvent = lambda e, miscare=miscare: self.miscare_click_event(
                 e, miscare)
-            layout.addWidget(
+            self.tabla_de_sah.layout.addWidget(
                 miscare.grafica.label, miscare.piesa_rand_tinta, miscare.piesa_coloana_tinta)
             miscare.terminare_miscare = self.terminare_miscare
             self.miscari_posibile.append(miscare)
