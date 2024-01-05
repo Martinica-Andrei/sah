@@ -1,10 +1,9 @@
 from tabla_de_sah import TablaDeSah
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGridLayout, QLabel, QWidget
-from app import ecran
+from app import ecran, main_layout
 from piese.miscari.capturare import Capturare
 from piese.rege import Rege
-from app import ecran
 from PyQt5.QtGui import QFont
 
 
@@ -164,7 +163,8 @@ class JocDeSah:
             self.label_stare_joc.hide()
 
     def interfata(self):
-        self.layout = QGridLayout()
+        self.widget_pagina = QWidget()
+        self.layout = QGridLayout(self.widget_pagina)
         self.top_layout = QGridLayout()
         self.bottom_layout = QGridLayout()
         self.layout.setAlignment(Qt.AlignCenter)
@@ -189,4 +189,4 @@ class JocDeSah:
         self.label_jucator_curent.setAlignment(Qt.AlignCenter)
         self.label_stare_joc.setAlignment(Qt.AlignCenter)
 
-        ecran.setLayout(self.layout)
+        main_layout.addWidget(self.widget_pagina)
