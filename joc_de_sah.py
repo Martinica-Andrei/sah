@@ -92,13 +92,13 @@ class JocDeSah:
 
     # adauga doar miscari care nu il pun pe regele jucatorului curent in check
     def piesa_miscari_legale(self, miscari_piesa):
-        miscari_check = []
+        miscari_legale = []
         for miscare in miscari_piesa:
             miscare.executa()
             if self.este_check() == False:
-                miscari_check.append(miscare)
+                miscari_legale.append(miscare)
             miscare.anuleaza()
-        return miscari_check
+        return miscari_legale
 
     def anulare_ultima_miscare(self):
         if len(self.miscari_facute):
@@ -126,18 +126,27 @@ class JocDeSah:
         return False
 
     def este_checkmate(self):
+        if self.este_check() == False:
+            return False
         for miscari in self.miscari_jucator(self.index_jucator_curent):
-            for miscare in miscari:
-                miscare.executa()
-                if self.este_check() == False:
-                    miscare.anuleaza()
-                    return False
-                miscare.anuleaza()
+            miscari_legale = self.piesa_miscari_legale(miscari)
+            if len(miscari_legale) > 0:
+                return False
+        return True
+    
+    def este_stalemate(self):
+        if self.este_check():
+            return False
+        for miscari in self.miscari_jucator(self.index_jucator_curent):
+            miscari_legale = self.piesa_miscari_legale(miscari)
+            if len(miscari_legale) > 0:
+                return False
         return True
 
     def verificare_joc_sfarsit(self):
-        if self.este_check():
-            if self.este_checkmate():
-                print("checkmate")
-            else:
-                print('check')
+        if self.este_stalemate():
+            print("stalemate")
+        elif self.este_checkmate():
+            print("checkmate")
+        elif self.este_check():
+            print("check")
