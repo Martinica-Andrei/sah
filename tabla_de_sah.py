@@ -24,7 +24,6 @@ class TablaDeSah:
         self.creere_piese()
 
     def layout_configurare(self):
-        self.layout.setAlignment(Qt.AlignCenter)
         self.layout.setSpacing(0)
         self.layout.setContentsMargins(0,0,0,0)
 

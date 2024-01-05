@@ -1,21 +1,23 @@
 from tabla_de_sah import TablaDeSah
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QGridLayout, QLabel, QWidget
 from app import ecran
 from piese.miscari.capturare import Capturare
 from piese.rege import Rege
 from app import ecran
+from PyQt5.QtGui import QFont
 
 
 class JocDeSah:
     def __init__(self):
         self.tabla_de_sah = TablaDeSah(self)
-        ecran.setLayout(self.tabla_de_sah.layout)
-        self.jucatori = ["alb", "negru"]
-        self.index_jucator_curent = 0
+        self.interfata()
+        self.jucatori = ["Alb", "Negru"]
+        self.index_jucator_curent = -1
         self.miscari_posibile = []
         self.miscari_facute = []
         ecran.keyPressEvent = self.key_press_event
-        self.adaugare_eventuri(self.index_jucator_curent)
+        self.setare_urmatorul_jucator()
 
     def stergere_miscari_posibile(self):
         for miscare in self.miscari_posibile:
@@ -36,23 +38,27 @@ class JocDeSah:
         self.stergere_miscari_posibile()
         self.adaugare_miscari_posibile(miscari_posibile)
 
-    def setare_urmatorul_jucator(self):
-        self.index_jucator_curent += 1
-        if self.index_jucator_curent >= len(self.jucatori):
-            self.index_jucator_curent = 0
+    def setare_index_jucator_curent(self, valoare):
+        if valoare < 0:
+            valoare = len(self.jucatori) - 1
+        elif valoare >= len(self.jucatori):
+            valoare = 0
+        self.index_jucator_curent = valoare
         self.adaugare_eventuri(self.index_jucator_curent)
+        self.label_jucator_curent.setText(
+            self.jucatori[self.index_jucator_curent])
+
+    def setare_urmatorul_jucator(self):
+        self.setare_index_jucator_curent(self.index_jucator_curent + 1)
 
     def setare_jucator_anterior(self):
-        self.index_jucator_curent -= 1
-        if self.index_jucator_curent < 0:
-            self.index_jucator_curent = len(self.jucatori) - 1
-        self.adaugare_eventuri(self.index_jucator_curent)
+        self.setare_index_jucator_curent(self.index_jucator_curent - 1)
 
     def terminare_miscare(self, miscare):
         self.stergere_miscari_posibile()
         self.setare_urmatorul_jucator()
         self.miscari_facute.append(miscare)
-        self.verificare_joc_sfarsit()
+        self.afisare_stare_joc()
 
     def adaugare_eventuri(self, echipa):
         for i in range(self.tabla_de_sah.randuri):
@@ -107,7 +113,7 @@ class JocDeSah:
             ultima_miscare.anuleaza()
             self.setare_jucator_anterior()
             self.stergere_miscari_posibile()
-            self.verificare_joc_sfarsit()
+            self.afisare_stare_joc()
 
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
@@ -134,7 +140,7 @@ class JocDeSah:
             if len(miscari_legale) > 0:
                 return False
         return True
-    
+
     def este_stalemate(self):
         if self.este_check():
             return False
@@ -144,10 +150,43 @@ class JocDeSah:
                 return False
         return True
 
-    def verificare_joc_sfarsit(self):
+    def afisare_stare_joc(self):
         if self.este_stalemate():
-            print("stalemate")
+            self.label_stare_joc.setText("Stalemate")
+            self.label_stare_joc.show()
         elif self.este_checkmate():
-            print("checkmate")
+            self.label_stare_joc.setText("Checkmate")
+            self.label_stare_joc.show()
         elif self.este_check():
-            print("check")
+            self.label_stare_joc.setText("Check")
+            self.label_stare_joc.show()
+        else:
+            self.label_stare_joc.hide()
+
+    def interfata(self):
+        self.layout = QGridLayout()
+        self.top_layout = QGridLayout()
+        self.bottom_layout = QGridLayout()
+        self.layout.setAlignment(Qt.AlignCenter)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.addLayout(self.top_layout, 0, 0)
+        self.layout.addLayout(self.tabla_de_sah.layout, 1, 0)
+        self.layout.addLayout(self.bottom_layout, 2, 0)
+
+        self.font = QFont()
+        self.font.setPointSize(20)
+
+        self.label_jucator_curent = QLabel()
+        self.label_jucator_curent.setFont(self.font)
+
+        self.label_stare_joc = QLabel()
+        self.label_stare_joc.setFont(self.font)
+        self.label_stare_joc.hide()
+
+        self.top_layout.addWidget(self.label_jucator_curent, 0, 0)
+        self.top_layout.addWidget(self.label_stare_joc, 0, 1)
+
+        self.label_jucator_curent.setAlignment(Qt.AlignCenter)
+        self.label_stare_joc.setAlignment(Qt.AlignCenter)
+
+        ecran.setLayout(self.layout)
