@@ -13,6 +13,7 @@ class Mutare(Actiune):
     def anuleaza(self):
         self.piesa.tabla_de_sah.muta_piesa(
             self.piesa, self.piesa_rand_curent, self.piesa_coloana_curenta)
+        super().anuleaza()
 
     def distanta(self):
         return abs(self.piesa_rand_curent - self.piesa_rand_tinta) + \

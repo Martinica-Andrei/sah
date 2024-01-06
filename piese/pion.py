@@ -49,7 +49,7 @@ class Pion(Piesa):
 
     def miscari_posibile(self):
         rand, coloana = self.pozitie()
-        este_prima_miscare = (self.rand_initial == rand)
+        este_prima_miscare = (len(self.miscari_facute) == 0)
         nr_randuri = 1 + este_prima_miscare
         oprire = rand + ((nr_randuri + 1) * self.directie_miscare)
         miscari = []

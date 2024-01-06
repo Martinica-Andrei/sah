@@ -29,3 +29,4 @@ class Promovare(Actiune):
         self.piesa.tabla_de_sah.adaugare_piesa(self.piesa, self.piesa_rand_curent, self.piesa_coloana_curenta)
         if self.piesa_tinta:
             self.piesa.tabla_de_sah.adaugare_piesa(self.piesa_tinta, self.piesa_rand_tinta, self.piesa_coloana_tinta)
+        super().anuleaza()

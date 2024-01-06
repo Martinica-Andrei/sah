@@ -17,3 +17,4 @@ class Capturare(Actiune):
                          self.piesa_coloana_curenta)
         tabla.adaugare_piesa(
             self.piesa_tinta, self.piesa_rand_tinta, self.piesa_coloana_tinta)
+        super().anuleaza()

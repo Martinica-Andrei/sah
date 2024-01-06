@@ -17,10 +17,11 @@ class Actiune:
             self.grafica = Patratica(60, 60, self.cale_fisier)
 
     def executa(self):
+        self.piesa.miscari_facute.append(self)
         if self.actiune_suplimentara:
             self.actiune_suplimentara()
         if self.terminare_miscare:
             self.terminare_miscare(self)
 
     def anuleaza(self):
-        pass
+        self.piesa.miscari_facute.pop()

@@ -49,9 +49,6 @@ class TablaDeSah:
         piesa.joc_de_sah = self.joc_de_sah
         piesa.rand = rand
         piesa.coloana = coloana
-        if piesa.rand_initial is None:
-            piesa.rand_initial = rand
-            piesa.coloana_initiala = coloana
 
     def scoatere_piesa(self, rand, coloana):
         if self.piese[rand][coloana] is None:

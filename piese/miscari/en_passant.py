@@ -18,3 +18,4 @@ class EnPassant(Actiune):
             self.piesa, self.piesa_rand_curent, self.piesa_coloana_curenta)
         self.piesa.tabla_de_sah.adaugare_piesa(
             self.pion_capturare, self.pion_capturare.rand, self.pion_capturare.coloana)
+        super().anuleaza()
