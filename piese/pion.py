@@ -1,6 +1,8 @@
 from .piesa import Piesa
 from .miscari.mutare import Mutare
 from .miscari.capturare import Capturare
+from .miscari.promovare import Promovare
+from .rege import Rege
 
 
 class Pion(Piesa):
@@ -18,7 +20,10 @@ class Pion(Piesa):
             if self.tabla_de_sah.is_coordonate_valide(rand_urmator, c):
                 piesa_tinta = self.tabla_de_sah.piese[rand_urmator][c]
                 if piesa_tinta is not None and piesa_tinta.echipa != self.echipa:
-                    miscari.append(Capturare(self, piesa_tinta))
+                    if (rand_urmator == 0 or rand_urmator == self.tabla_de_sah.randuri - 1) and type(piesa_tinta) != Rege:
+                        miscari.append(Promovare(self, rand_urmator, c))
+                    else:
+                        miscari.append(Capturare(self, piesa_tinta))
         return miscari
 
     def miscari_posibile(self):
@@ -29,7 +34,10 @@ class Pion(Piesa):
         miscari = []
         for r in range(rand + self.directie_miscare, oprire, self.directie_miscare):
             if self.tabla_de_sah.is_coordonate_valide(r, coloana) and self.tabla_de_sah.piese[r][coloana] is None:
-                miscari.append(Mutare(self, r, coloana))
+                if r == 0 or r == self.tabla_de_sah.randuri - 1:
+                    miscari.append(Promovare(self, r, coloana))
+                else:
+                    miscari.append(Mutare(self, r, coloana))
             else:
                 break
         miscari += self.miscari_de_capturat()

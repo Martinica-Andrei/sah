@@ -44,8 +44,8 @@ class JocDeSah:
             valoare = 0
         self.index_jucator_curent = valoare
         self.adaugare_eventuri(self.index_jucator_curent)
-        self.afisare_stare_joc()
         self.tabla_de_sah.updatare_grafica()
+        self.afisare_stare_joc()
         self.label_jucator_curent.setText(
             self.jucatori[self.index_jucator_curent])
 

@@ -4,8 +4,8 @@ from .miscari.capturare import Capturare
 
 
 class Piesa(Patratica):
-    lungime_piese = 40
-    inaltime_piese = 40
+    lungime_piese = 60
+    inaltime_piese = 60
     alb = 0
     negru = 1
 

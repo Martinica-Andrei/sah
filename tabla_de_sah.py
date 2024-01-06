@@ -19,7 +19,7 @@ class TablaDeSah:
         self.patratele_background = []
         self.piese = [[None for c in range(self.coloane)]
                       for r in range(self.randuri)]
-        self.piese_scoase = set()
+        self.piese_grafica_de_sters = set()
         self.layout = QGridLayout()
         self.layout_configurare()
         self.creere_background()
@@ -42,8 +42,8 @@ class TablaDeSah:
         if self.piese[rand][coloana] is not None:
             self.scoatere_piesa(rand, coloana)
         self.piese[rand][coloana] = piesa
-        if piesa in self.piese_scoase:
-            self.piese_scoase.remove(piesa)
+        if piesa in self.piese_grafica_de_sters:
+            self.piese_grafica_de_sters.remove(piesa)
         piesa.tabla_de_sah = self
         piesa.joc_de_sah = self.joc_de_sah
         piesa.rand = rand
@@ -55,7 +55,7 @@ class TablaDeSah:
     def scoatere_piesa(self, rand, coloana):
         if self.piese[rand][coloana] is None:
             return
-        self.piese_scoase.add(self.piese[rand][coloana])
+        self.piese_grafica_de_sters.add(self.piese[rand][coloana])
         self.piese[rand][coloana] = None
 
     def muta_piesa(self, piesa, rand, coloana):
@@ -74,8 +74,9 @@ class TablaDeSah:
                     piesa.label.setParent(None)
                     self.layout.addWidget(
                         piesa.label, piesa.rand, piesa.coloana)
-        for piesa in self.piese_scoase:
+        for piesa in self.piese_grafica_de_sters:
             piesa.label.setParent(None)
+        self.piese_grafica_de_sters.clear()
 
     def creere_piese(self):
         for i in range(self.coloane):

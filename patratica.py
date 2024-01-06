@@ -8,3 +8,7 @@ class Patratica:
         self.label = QLabel()
         self.label.setPixmap(self.pixmap)
         self.label.setAlignment(Qt.AlignCenter)
+
+    def redimensionare(self, lungime, inaltime):
+        self.pixmap = self.pixmap.scaled(lungime, inaltime)
+        self.label.setPixmap(self.pixmap)
