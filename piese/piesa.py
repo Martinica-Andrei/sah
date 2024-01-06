@@ -14,14 +14,14 @@ class Piesa(Patratica):
                          self.inaltime_piese, cale_fisiere[index_fisier])
         self.tabla_de_sah = None
         self.joc_de_sah = None
+        self.rand = None
+        self.coloana = None
         self.echipa = index_fisier  # index fisier coincide cu echipa
         self.rand_initial = None
         self.coloana_initiala = None
 
     def pozitie(self):
-        rand, coloana, _, _ = self.tabla_de_sah.layout.getItemPosition(
-            self.tabla_de_sah.layout.indexOf(self.label))
-        return (rand, coloana)
+        return (self.rand, self.coloana)
 
     def miscari_posibile(self):
         pass

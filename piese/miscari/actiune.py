@@ -10,7 +10,7 @@ class Actiune:
 
     def init_grafica(self):
         if self.grafica is None:
-            self.grafica = Patratica(50,50, self.cale_fisier)
+            self.grafica = Patratica(50, 50, self.cale_fisier)
 
     def executa(self):
         if self.actiune_suplimentara:

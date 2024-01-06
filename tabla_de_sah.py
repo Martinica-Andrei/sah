@@ -3,6 +3,7 @@ from patratica import Patratica
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtCore import Qt
 
+
 class TablaDeSah:
 
     cale_fisiere_patratele = [
@@ -18,6 +19,7 @@ class TablaDeSah:
         self.patratele_background = []
         self.piese = [[None for c in range(self.coloane)]
                       for r in range(self.randuri)]
+        self.piese_scoase = set()
         self.layout = QGridLayout()
         self.layout_configurare()
         self.creere_background()
@@ -25,7 +27,7 @@ class TablaDeSah:
 
     def layout_configurare(self):
         self.layout.setSpacing(0)
-        self.layout.setContentsMargins(0,0,0,0)
+        self.layout.setContentsMargins(0, 0, 0, 0)
 
     def creere_background(self):
         for i in range(self.randuri):
@@ -37,25 +39,44 @@ class TablaDeSah:
                 self.patratele_background[i].append(patratica)
 
     def adaugare_piesa(self, piesa, rand, coloana):
-        self.layout.addWidget(piesa.label, rand, coloana)
+        if self.piese[rand][coloana] is not None:
+            self.scoatere_piesa(rand, coloana)
         self.piese[rand][coloana] = piesa
+        if piesa in self.piese_scoase:
+            self.piese_scoase.remove(piesa)
         piesa.tabla_de_sah = self
         piesa.joc_de_sah = self.joc_de_sah
+        piesa.rand = rand
+        piesa.coloana = coloana
         if piesa.rand_initial is None:
             piesa.rand_initial = rand
-        if piesa.coloana_initiala is None:
             piesa.coloana_initiala = coloana
 
     def scoatere_piesa(self, rand, coloana):
-        self.piese[rand][coloana].label.setParent(None)
+        if self.piese[rand][coloana] is None:
+            return
+        self.piese_scoase.add(self.piese[rand][coloana])
         self.piese[rand][coloana] = None
 
     def muta_piesa(self, piesa, rand, coloana):
         rand_curent, coloana_curenta = piesa.pozitie()
         self.piese[rand_curent][coloana_curenta] = None
+        if self.piese[rand][coloana] is not None:
+            self.scoatere_piesa(rand,coloana)
         self.piese[rand][coloana] = piesa
-        piesa.label.setParent(None)
-        self.layout.addWidget(piesa.label, rand, coloana)
+        piesa.rand = rand
+        piesa.coloana = coloana
+
+    def updatare_grafica(self):
+        for rand in self.piese:
+            for piesa in rand:
+                if piesa is not None:
+                    piesa.label.setParent(None)
+                    self.layout.addWidget(piesa.label, piesa.rand, piesa.coloana)
+        for piesa in self.piese_scoase:
+            piesa.label.setParent(None)
+
+        print(self.piese_scoase)
 
     def creere_piese(self):
         for i in range(self.coloane):
@@ -70,23 +91,23 @@ class TablaDeSah:
             self.adaugare_piesa(piese.Cal(piese.Piesa.negru), 0, i)
             self.adaugare_piesa(piese.Cal(piese.Piesa.alb),
                                 self.randuri - 1, i)
-            
+
         for i in [2, self.coloane - 3]:
             self.adaugare_piesa(piese.Nebun(piese.Piesa.negru), 0, i)
             self.adaugare_piesa(piese.Nebun(piese.Piesa.alb),
                                 self.randuri - 1, i)
-            
+
         self.adaugare_piesa(piese.Regina(piese.Piesa.negru), 0, 3)
         self.adaugare_piesa(piese.Regina(piese.Piesa.alb),
-                                self.randuri - 1, 3)
-        
+                            self.randuri - 1, 3)
+
         self.adaugare_piesa(piese.Rege(piese.Piesa.negru), 0, 4)
         self.adaugare_piesa(piese.Rege(piese.Piesa.alb),
-                                self.randuri - 1, 4)
+                            self.randuri - 1, 4)
 
     def is_coordonate_valide(self, r, c):
         return (r >= 0 and r < self.randuri and c >= 0 and c < self.coloane)
-    
+
     def piese_echipa(self, echipa):
         piese = []
         for rand in self.piese:

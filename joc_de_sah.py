@@ -44,6 +44,8 @@ class JocDeSah:
             valoare = 0
         self.index_jucator_curent = valoare
         self.adaugare_eventuri(self.index_jucator_curent)
+        self.afisare_stare_joc()
+        self.tabla_de_sah.updatare_grafica()
         self.label_jucator_curent.setText(
             self.jucatori[self.index_jucator_curent])
 
@@ -57,7 +59,6 @@ class JocDeSah:
         self.stergere_miscari_posibile()
         self.setare_urmatorul_jucator()
         self.miscari_facute.append(miscare)
-        self.afisare_stare_joc()
 
     def adaugare_eventuri(self, echipa):
         for i in range(self.tabla_de_sah.randuri):
@@ -112,7 +113,6 @@ class JocDeSah:
             ultima_miscare.anuleaza()
             self.setare_jucator_anterior()
             self.stergere_miscari_posibile()
-            self.afisare_stare_joc()
 
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
