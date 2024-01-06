@@ -19,6 +19,7 @@ class Piesa(Patratica):
         self.echipa = index_fisier  # index fisier coincide cu echipa
         self.rand_initial = None
         self.coloana_initiala = None
+        self.miscari_facute = 0
 
     def pozitie(self):
         return (self.rand, self.coloana)
