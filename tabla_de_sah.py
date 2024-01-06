@@ -68,15 +68,15 @@ class TablaDeSah:
         piesa.coloana = coloana
 
     def updatare_grafica(self):
+        for piesa in self.piese_grafica_de_sters:
+            piesa.label.setParent(None)
+        self.piese_grafica_de_sters.clear()
         for rand in self.piese:
             for piesa in rand:
                 if piesa is not None:
                     piesa.label.setParent(None)
                     self.layout.addWidget(
                         piesa.label, piesa.rand, piesa.coloana)
-        for piesa in self.piese_grafica_de_sters:
-            piesa.label.setParent(None)
-        self.piese_grafica_de_sters.clear()
 
     def creere_piese(self):
         for i in range(self.coloane):
