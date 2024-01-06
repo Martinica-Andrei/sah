@@ -62,7 +62,7 @@ class TablaDeSah:
         rand_curent, coloana_curenta = piesa.pozitie()
         self.piese[rand_curent][coloana_curenta] = None
         if self.piese[rand][coloana] is not None:
-            self.scoatere_piesa(rand,coloana)
+            self.scoatere_piesa(rand, coloana)
         self.piese[rand][coloana] = piesa
         piesa.rand = rand
         piesa.coloana = coloana
@@ -72,11 +72,10 @@ class TablaDeSah:
             for piesa in rand:
                 if piesa is not None:
                     piesa.label.setParent(None)
-                    self.layout.addWidget(piesa.label, piesa.rand, piesa.coloana)
+                    self.layout.addWidget(
+                        piesa.label, piesa.rand, piesa.coloana)
         for piesa in self.piese_scoase:
             piesa.label.setParent(None)
-
-        print(self.piese_scoase)
 
     def creere_piese(self):
         for i in range(self.coloane):
