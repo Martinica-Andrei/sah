@@ -2,6 +2,7 @@ import piese
 from patratica import Patratica
 from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QCoreApplication
 
 
 class TablaDeSah:
@@ -77,6 +78,9 @@ class TablaDeSah:
                     piesa.label.setParent(None)
                     self.layout.addWidget(
                         piesa.label, piesa.rand, piesa.coloana)
+                    piesa.label.update()
+        # updateaza grafica
+        QCoreApplication.processEvents()
 
     def creere_piese(self):
         for i in range(self.coloane):
