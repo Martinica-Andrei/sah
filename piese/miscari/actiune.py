@@ -18,10 +18,12 @@ class Actiune:
 
     def executa(self):
         self.piesa.miscari_facute.append(self)
+        self.piesa.joc_de_sah.miscari_facute.append(self)
         if self.actiune_suplimentara:
             self.actiune_suplimentara()
         if self.terminare_miscare:
-            self.terminare_miscare(self)
+            self.terminare_miscare()
 
     def anuleaza(self):
         self.piesa.miscari_facute.pop()
+        self.piesa.joc_de_sah.miscari_facute.pop()

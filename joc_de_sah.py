@@ -16,6 +16,9 @@ class JocDeSah:
         self.miscari_posibile = []
         self.miscari_facute = []
         ecran.keyPressEvent = self.key_press_event
+        self.este_check_jucator_curent = False
+        self.este_checkmate_jucator_curent = False
+        self.este_stalemate_jucator_curent = False
         self.setare_urmatorul_jucator()
 
     def stergere_miscari_posibile(self):
@@ -45,7 +48,7 @@ class JocDeSah:
         self.index_jucator_curent = valoare
         self.adaugare_eventuri(self.index_jucator_curent)
         self.tabla_de_sah.updatare_grafica()
-        self.afisare_stare_joc()
+        self.stare_joc()
         self.label_jucator_curent.setText(
             self.jucatori[self.index_jucator_curent])
 
@@ -55,10 +58,9 @@ class JocDeSah:
     def setare_jucator_anterior(self):
         self.setare_index_jucator_curent(self.index_jucator_curent - 1)
 
-    def terminare_miscare(self, miscare):
+    def terminare_miscare(self):
         self.stergere_miscari_posibile()
         self.setare_urmatorul_jucator()
-        self.miscari_facute.append(miscare)
 
     def adaugare_eventuri(self, echipa):
         for i in range(self.tabla_de_sah.randuri):
@@ -102,17 +104,16 @@ class JocDeSah:
         miscari_legale = []
         for miscare in miscari_piesa:
             miscare.executa()
-            if self.este_check() == False:
+            if self._este_check_jucator_curent() == False:
                 miscari_legale.append(miscare)
             miscare.anuleaza()
         return miscari_legale
 
     def anulare_ultima_miscare(self):
         if len(self.miscari_facute):
-            ultima_miscare = self.miscari_facute.pop()
-            ultima_miscare.anuleaza()
-            self.setare_jucator_anterior()
+            self.miscari_facute[-1].anuleaza()
             self.stergere_miscari_posibile()
+            self.setare_jucator_anterior()
 
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
@@ -124,15 +125,15 @@ class JocDeSah:
             yield piesa.miscari_posibile()
 
     # este_check pentru jucator curent
-    def este_check(self):
+    def _este_check_jucator_curent(self):
         for miscari in self.miscari_jucator(not self.index_jucator_curent):
             for miscare in miscari:
                 if type(miscare) == Capturare and type(miscare.piesa_tinta) == Rege:
                     return True
         return False
 
-    def este_checkmate(self):
-        if self.este_check() == False:
+    def _este_checkmate_jucator_curent(self):
+        if self._este_check_jucator_curent() == False:
             return False
         for miscari in self.miscari_jucator(self.index_jucator_curent):
             miscari_legale = self.piesa_miscari_legale(miscari)
@@ -140,8 +141,8 @@ class JocDeSah:
                 return False
         return True
 
-    def este_stalemate(self):
-        if self.este_check():
+    def _este_stalemate_jucator_curent(self):
+        if self._este_check_jucator_curent():
             return False
         for miscari in self.miscari_jucator(self.index_jucator_curent):
             miscari_legale = self.piesa_miscari_legale(miscari)
@@ -149,14 +150,22 @@ class JocDeSah:
                 return False
         return True
 
-    def afisare_stare_joc(self):
-        if self.este_stalemate():
+    def stare_joc(self):
+        if len(self.miscari_facute) == 3:
+            pass
+        self.este_check_jucator_curent = False
+        self.este_checkmate_jucator_curent = False
+        self.este_stalemate_jucator_curent = False
+        if self._este_stalemate_jucator_curent():
+            self.este_stalemate_jucator_curent = True
             self.label_stare_joc.setText("Stalemate")
             self.label_stare_joc.show()
-        elif self.este_checkmate():
+        elif self._este_checkmate_jucator_curent():
+            self.este_checkmate_jucator_curent = True
             self.label_stare_joc.setText("Checkmate")
             self.label_stare_joc.show()
-        elif self.este_check():
+        elif self._este_check_jucator_curent():
+            self.este_check_jucator_curent = True
             self.label_stare_joc.setText("Check")
             self.label_stare_joc.show()
         else:
