@@ -5,6 +5,7 @@ from app import ecran, main_layout
 from piese.miscari.capturare import Capturare
 from piese.rege import Rege
 from PyQt5.QtGui import QFont
+from functools import wraps
 
 
 class JocDeSah:
@@ -15,6 +16,7 @@ class JocDeSah:
         self.index_jucator_curent = -1
         self.miscari_posibile = []
         self.miscari_facute = []
+        self.se_executa_event = False
         ecran.keyPressEvent = self.key_press_event
         self.este_check_jucator_curent = False
         self.este_checkmate_jucator_curent = False
@@ -78,11 +80,24 @@ class JocDeSah:
                 else:
                     piesa.label.mousePressEvent = self.patratica_click_event
 
+    # blocheaza executarea altor evenimente atata timp cat se executa codul din func
+    def eveniment_unic(func):
+        @wraps(func)
+        def wrapper(self, *args, **kwargs):
+            if self.se_executa_event == False:
+                self.se_executa_event = True
+                val_functie = func(self, *args, **kwargs)
+                self.se_executa_event = False
+                return val_functie
+        return wrapper
+
+    @eveniment_unic
     def patratica_click_event(self, e):
         mouse_butoane = e.buttons()
         if mouse_butoane & (Qt.LeftButton | Qt.RightButton):
             self.stergere_miscari_posibile()
 
+    @eveniment_unic
     def piesa_click_event(self, e, piesa):
         mouse_butoane = e.buttons()
         if mouse_butoane & Qt.LeftButton:
@@ -92,12 +107,18 @@ class JocDeSah:
         elif mouse_butoane & Qt.RightButton:
             self.stergere_miscari_posibile()
 
+    @eveniment_unic
     def miscare_click_event(self, e, miscare):
         mouse_butoane = e.buttons()
         if mouse_butoane & Qt.LeftButton:
             miscare.executa()
         elif mouse_butoane & Qt.RightButton:
             self.stergere_miscari_posibile()
+
+    @eveniment_unic
+    def key_press_event(self, event):
+        if event.key() == Qt.Key_Z:
+            self.anulare_ultima_miscare()
 
     # adauga doar miscari care nu il pun pe regele jucatorului curent in check
     def piesa_miscari_legale(self, miscari_piesa):
@@ -114,10 +135,6 @@ class JocDeSah:
             self.miscari_facute[-1].anuleaza()
             self.stergere_miscari_posibile()
             self.setare_jucator_anterior()
-
-    def key_press_event(self, event):
-        if event.key() == Qt.Key_Z:
-            self.anulare_ultima_miscare()
 
     def miscari_jucator(self, index_jucator):
         piese = self.tabla_de_sah.piese_echipa(index_jucator)
