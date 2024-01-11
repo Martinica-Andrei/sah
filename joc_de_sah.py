@@ -1,7 +1,7 @@
 from tabla_de_sah import TablaDeSah
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGridLayout, QLabel, QWidget
-from app import ecran, main_layout
+from app import ecran, main_layout, meniu_principal
 from piese.miscari.capturare import Capturare
 from piese.rege import Rege
 from PyQt5.QtGui import QFont
@@ -82,7 +82,7 @@ class JocDeSah:
 
     # blocheaza executarea altor evenimente atata timp cat se executa codul din func
     def eveniment_unic(func):
-        @wraps(func)
+        #@wraps(func) # nu e necesar
         def wrapper(self, *args, **kwargs):
             if self.se_executa_event == False:
                 self.se_executa_event = True
@@ -119,6 +119,8 @@ class JocDeSah:
     def key_press_event(self, event):
         if event.key() == Qt.Key_Z:
             self.anulare_ultima_miscare()
+        if event.key() == Qt.Key.Key_Escape:
+            main_layout.setCurrentWidget(meniu_principal)
 
     # adauga doar miscari care nu il pun pe regele jucatorului curent in check
     def piesa_miscari_legale(self, miscari_piesa):
@@ -216,3 +218,6 @@ class JocDeSah:
         self.label_stare_joc.setAlignment(Qt.AlignCenter)
 
         main_layout.addWidget(self.widget_pagina)
+
+    def destructor(self):
+        main_layout.removeWidget(self.widget_pagina)
